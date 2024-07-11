@@ -1,14 +1,10 @@
-import makeWASocket, { useMultiFileAuthState, DisconnectReason } from '@adiwajshing/baileys';
-import qrcode from 'qrcode-terminal';
-import { Boom } from '@hapi/boom';
-import { exec } from 'child_process';
-import fs from 'fs';
-import os from 'os';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
+const qrcode = require('qrcode-terminal');
+const { Boom } = require('@hapi/boom');
+const { exec } = require('child_process');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
@@ -29,7 +25,7 @@ async function connectToWhatsApp() {
             qrcode.generate(qr, { small: true });
         }
         if (connection === 'close') {
-            const shouldReconnect = (lastDisconnect?.error instanceof Boom) &&
+            const shouldReconnect = (lastDisconnect.error instanceof Boom) &&
                 lastDisconnect.error.output?.statusCode !== DisconnectReason.loggedOut;
             console.log('Connection closed, reconnecting...', shouldReconnect);
             if (shouldReconnect) {
@@ -55,7 +51,6 @@ async function connectToWhatsApp() {
         }
     });
 }
-
 
 async function handleFileUpload(msg, sock) {
     const fileName = msg.message.documentMessage.fileName;
@@ -146,16 +141,7 @@ function handleCustomCommand(command, remoteJid, sock) {
             }
             const filePath = args[0];
             if (fs.existsSync(filePath)) {
-                sock.sendMessage(remoteJid, { 
-                    document: { url: filePath }, 
-                    fileName: path.basename(filePath),
-                    mimetype: 'application/octet-stream'
-                }).then(() => {
-                    console.log('File sent successfully');
-                }).catch((error) => {
-                    console.error('Error sending file:', error);
-                    sock.sendMessage(remoteJid, { text: `Error sending file: ${error.message}` });
-                });
+                sock.sendMessage(remoteJid, { document: { url: filePath }, mimetype: 'application/octet-stream' });
             } else {
                 sock.sendMessage(remoteJid, { text: `File not found: ${filePath}` });
             }

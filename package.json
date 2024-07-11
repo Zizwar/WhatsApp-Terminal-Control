@@ -1,9 +1,9 @@
 {
     "name": "whatsapp-terminal-control",
-    "version": "0.7.0",
+    "version": "0.7.1",
     "description": "Control your computer's terminal remotely via WhatsApp messages",
     "main": "whatsapp-terminal-control.js",
-    "type": "module",
+ 
     "scripts": {
         "start": "node whatsapp-terminal-control.js"
     },
