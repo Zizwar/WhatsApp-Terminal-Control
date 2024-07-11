@@ -23,7 +23,6 @@
         "file-management"
     ],
     "dependencies": {
-        "@adiwajshing/baileys": "^5.0.0",
         "@hapi/boom": "^10.0.1",
         "@whiskeysockets/baileys": "^6.7.5",
         "qrcode-terminal": "^0.12.0"
