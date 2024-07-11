@@ -63,4 +63,4 @@ Feel free to fork this project and submit pull requests for improvements or addi
 
 https://github.com/Zizwar/WhatsApp-Terminal-Control
 
-[WhatsApp-Terminal-Control](https://raw.githubusercontent.com/Zizwar/WhatsApp-Terminal-Control/main/screen/image.png)
+![WhatsApp-Terminal-Control](https://raw.githubusercontent.com/Zizwar/WhatsApp-Terminal-Control/main/screen/image.png)
