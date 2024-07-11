@@ -141,10 +141,38 @@ function handleCustomCommand(command, remoteJid, sock) {
             }
             const filePath = args[0];
             if (fs.existsSync(filePath)) {
-                sock.sendMessage(remoteJid, { document: { url: filePath }, mimetype: 'application/octet-stream' });
+                const fileName = path.basename(filePath);
+                sock.sendMessage(remoteJid, { 
+                    document: { url: filePath }, 
+                    fileName: fileName,
+                    mimetype: 'application/octet-stream'
+                });
             } else {
                 sock.sendMessage(remoteJid, { text: `File not found: ${filePath}` });
             }
+            break;
+        case 'netstat':
+            exec('netstat -an', (error, stdout, stderr) => {
+                if (error) {
+                    sock.sendMessage(remoteJid, { text: `Error: ${error.message}` });
+                    return;
+                }
+                const connections = stdout.split('\n').filter(line => line.includes('ESTABLISHED')).join('\n');
+                sock.sendMessage(remoteJid, { text: `Active connections:\n${connections}` });
+            });
+            break;
+        case 'ping':
+            if (args.length === 0) {
+                sock.sendMessage(remoteJid, { text: 'Please provide a host to ping' });
+                return;
+            }
+            exec(`ping -c 4 ${args[0]}`, (error, stdout, stderr) => {
+                if (error) {
+                    sock.sendMessage(remoteJid, { text: `Error: ${error.message}` });
+                    return;
+                }
+                sock.sendMessage(remoteJid, { text: stdout });
+            });
             break;
         default:
             sock.sendMessage(remoteJid, { text: `Unknown custom command: ${subCommand}` });
