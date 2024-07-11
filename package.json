@@ -1,0 +1,31 @@
+{
+    "name": "whatsapp-terminal-control",
+    "version": "0.7.0",
+    "description": "Control your computer's terminal remotely via WhatsApp messages",
+    "main": "whatsapp-terminal-control.js",
+    "type": "module",
+    "scripts": {
+        "start": "node whatsapp-terminal-control.js"
+    },
+    "author": "Brahim Bidi",
+    "license": "MIT",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zizwar/whatsapp-terminal-control.git"
+    },
+    "keywords": [
+        "whatsapp",
+        "terminal",
+        "remote-control",
+        "file-management"
+    ],
+    "dependencies": {
+        "@adiwajshing/baileys": "^5.0.0",
+        "@hapi/boom": "^10.0.1",
+        "@whiskeysockets/baileys": "^6.7.5",
+        "qrcode-terminal": "^0.12.0"
+    }
+}
